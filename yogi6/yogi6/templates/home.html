@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MAZU</title>
+  <link rel="icon" type="image/png" href="{% static 'img/mazu.ico' %}">
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Song+Myung&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Song+Myung&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Megrim&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+  <!-- Responsive navbar-->
+  <div id="wrapper">
+    {% if request.user.is_authenticated %}
+    <h1 id="user_login">{{request.user.display_name}} 님 환영합니다</h1>
+    {% endif %}
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button class="openbtn" onclick="openNav()"><span>&#9776;</span>CATEGORY</button>
+        <div id="mySidebar" class="sidebar">
+          <a href="{% url 'category' 0 %}">대중,</a>
+          <a href="{% url 'category' 1 %}">문화재,</a>
+          <a href="{% url 'category' 2 %}">미디어아트,</a>
+          <a href="{% url 'category' 3 %}">추상,</a>
+          <a href="{% url 'category' 4 %}">가족,</a>
+          <a href="{% url 'category' 5 %}">글로벌,</a>
+          <a href="{% url 'category' 6 %}">수상작,</a>
+          <a href="{% url 'category' 7 %}">현대,</a>
+          <a href="{% url 'category' 8 %}">과학,</a>
+          <a href="{% url 'category' 9 %}">예술,</a>
+          <a href="{% url 'category' 10 %}">ETC</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <!--검색창-->
+            <form method="get" action="{% url 'search' %}" class="search nav-item">{% csrf_token %}
+              <li class="nav-item"><input class="text-black" type="text" name="keyword" placeholder="  Search..."></li>
+              <li class="nav-item"><button class="btn-search text-black" type="submit"></button></li>
+            </form>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'mypage' %}">MY PAGE</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">LOGOUT</a></li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">SIGN UP</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">LOGIN</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+
+    <section>
+      <div class="main-header">
+        <div class="header-word">
+          <p>Find Your <span>Color</span>, Find Your <span>Taste</span></p>
+        </div>
+        <img src="{% static 'img/mazu_icon.png' %}" , alt="MAZU Logo">
+        <div>MAZU</div>
+      </div>
+      <hr>
+      <div class="content-list">
+        <div class="content-name">
+          <h1></h1>
+          <hr>
+        </div>
+        <div class="slider">
+        </div>
+        <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+        <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+      </div>
+      <div class="content-list">
+        <div class="content-name">
+          <h1></h1>
+          <hr>
+        </div>
+        <div class="slider">
+        </div>
+        <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+        <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+      </div>
+      <div class="content-list">
+        <div class="content-name">
+          <h1></h1>
+          <hr>
+        </div>
+        <div class="slider">
+        </div>
+        <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+        <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+      </div>
+      <div class="content-list">
+        <div class="content-name">
+          <h1></h1>
+          <hr>
+        </div>
+        <div class="slider">
+        </div>
+        <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+        <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+      </div>
+      <div class="content-list">
+        <div class="content-name">
+          <h1></h1>
+          <hr>
+        </div>
+        <div class="slider">
+        </div>
+        <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+        <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+      </div>
+    </section>
+
+    <!--
+    {% for key, value in data.items %}
+    <div>
+        <h2>{{key}}</h2>
+        <div>{{value}}</div>
+    </div>
+  {% endfor %}
+    -->
+  </div>
+</body>
+<script>
+  /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+  function closeNav() {
+    document.getElementById("mySidebar").style.height = "0";
+    document.getElementById("mySidebar").style.width = "0";
+  }
+
+  function openNav() {
+    if (document.getElementById("mySidebar").classList.contains("open")) {
+      document.getElementById("mySidebar").classList.remove("open");
+      closeNav();
+    } else {
+      document.getElementById("mySidebar").classList.add("open");
+      document.getElementById("mySidebar").style.height = "100%";
+      document.getElementById("mySidebar").style.width = "100%";
+    }
+  }
+
+  /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+</script>
+
+<script>
+
+  $(function () {
+    var key_list = []
+    {% for key in data.keys %}
+    key_list.push('{{key}}')
+    {% endfor %}
+    //console.log(key_list.length)
+    const next = document.querySelectorAll('.next');
+    const prev = document.querySelectorAll('.prev');
+    const slider = document.querySelectorAll('.slider')
+    const content_list = document.querySelectorAll('.content-list')
+
+    for (let i = 0; i < key_list.length; i++) {
+      content_list[i].style = 'display: inline !important';
+      getExhibitions(slider[i], key_list[i]);
+      makeSlider(slider[i], prev[i], next[i]);
+    }
+
+    function makeSlider(element, prev, next) {
+      next.addEventListener('click', () => {
+        const offsetX = element.offsetWidth;
+        element.scrollBy(offsetX, 0)
+      })
+      prev.addEventListener('click', () => {
+        const offsetX = element.offsetWidth;
+        element.scrollBy(-offsetX, 0)
+      })
+    }
+
+    function getExhibitions(element, content) {
+      {% if request.user.is_authenticated %}
+      if (content == 'recommend') {
+        {% if data.recommend %}
+        {% for value in data.recommend %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '{{request.user.display_name}} 님이 좋아할 만한 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      else if (content == 'near') {
+        {% if data.near %}
+        {% for value in data.near %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '우리 동네 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      else if (content == 'recent') {
+        {% if data.recent %}
+        {% for value in data.recent %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '따끈한 신상 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      } else if (content == 'hot') {
+        {% if data.hot %}
+        {% for value in data.hot %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '지금 HOT한 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      } else if (content == 'similar') {
+        {% if data.similar %}
+        {% for value in data.similar %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '{{request.user.display_name}} 님의 트렌드 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      {% else %}
+      if (content == 'recent') {
+        {% if data.recent %}
+        {% for value in data.recent %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '따끈한 신상 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      else if (content == 'hot') {
+        {% if data.hot %}
+        {% for value in data.hot %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '지금 HOT한 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      else if (content == 'deadline') {
+        {% if data.deadline %}
+        {% for value in data.deadline %}
+        var div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = '<a href="detail/{{value.exhibition_id}}/"><img src="{{value.poster_link}}" alt="{{value.name}}"></a>';
+        //div.innerHTML = `<img src="{{value.poster_link}}" alt=""> <p class="mb-auto">{{value.name}}</p>`;
+        element.previousElementSibling.firstElementChild.innerText = '마감 임박 전시';
+        element.appendChild(div);
+        {% endfor %}
+        {% endif %}
+      }
+      {% endif %}
+    }
+  });
+</script>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

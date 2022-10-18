@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  {% load static %}
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Song+Myung&display=swap"
+    rel="stylesheet">
+  <!-- Css Styles -->
+  <link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css">
+</head>
+
+<body>
+  <div class="register">
+    <h1> 회원가입 </h1>
+    <form action="{% url 'register' %}" method="POST" name="frm" onsubmit="return checkForm()">{% csrf_token %}
+      <div class="name_container">
+        <div class="description">
+          <label for="id_last_name">Last Name</label>
+          <label for="id_first_name">First Name</label>
+          <label for="id_username">User ID</label>
+          <label for="id_password1">Password</label>
+          <label for="id_password2">Confirm Password</label>
+        </div>
+        <div class="input_data">
+          <input type="text" name="last_name" required id="id_last_name" placeholder="성">
+          <input type="text" name="first_name" required id="id_first_name" placeholder="이름">
+          <input type="text" name="username" autofocus required id="id_username" placeholder="아이디">
+          <input type="password" name="password1" autocomplete="new-password" required id="id_password1"
+            placeholder="비밀번호">
+          <input type="password" name="password2" autocomplete="new-password" required id="id_password2"
+            placeholder="비밀번호 확인">
+        </div>
+        <div class="description">
+          <label for="id_email">E-mail</label>
+          <label for="id_display_name">Nickname</label>
+          <label for="id_age">Birth</label>
+          <label>Sex : </label>
+          <label>Keyword : </label>
+
+
+        </div>
+        <div class="input_data">
+          <input type="text" name="email" required id="id_email" placeholder="이메일">
+          <input type="text" name="display_name" required id="id_display_name" placeholder="닉네임">
+          <input type="text" name="age" id="id_age" placeholder="생년월일(YYYYMMDD)">
+          <div class="container">
+            <label for="id_male">남</label>
+            <input type="radio" name="sex" value="남" id="id_male">
+            <label for="id_female">여</label>
+            <input type="radio" name="sex" value="여" id="id_female">
+          </div>
+          <div class="container_vert">
+            <select id="select1" name="select1" required>
+              <option value="" disabled="disabled" selected>====선택1====</option>
+              <option value="0">대중</option>
+              <option value="1">문화재</option>
+              <option value="2">미디어아트</option>
+              <option value="3">추상</option>
+              <option value="4">가족</option>
+              <option value="5">글로벌</option>
+              <option value="6">수상작</option>
+              <option value="7">현대</option>
+              <option value="8">과학</option>
+              <option value="9">예술</option>
+            </select>
+            <select id="select2" name="select2" required>
+              <option value="" disabled="disabled" selected>====선택2====</option>
+              <option value="0">대중</option>
+              <option value="1">문화재</option>
+              <option value="2">미디어아트</option>
+              <option value="3">추상</option>
+              <option value="4">가족</option>
+              <option value="5">글로벌</option>
+              <option value="6">수상작</option>
+              <option value="7">현대</option>
+              <option value="8">과학</option>
+              <option value="9">예술</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <input id="submit_btn" type="submit">
+    </form>
+  </div>
+</body>
+
+</html>

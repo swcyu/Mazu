@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="icon" type="image/png" href="{% static 'img/mazu.ico' %}">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Song+Myung&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link rel="stylesheet" href="{% static 'css/nucleo-icons.css' %}" type="text/css">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/black-dashboard.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css_detail/review_star.css' %}" type="text/css">
+
+
+
+</head>
+<body>
+    <div class="wrapper">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            <i class="tim-icons icon-single-02"></i>
+          </a>
+          <a href="javascript:void(0)" class="simple-text logo-normal">
+            MY PAGE
+          </a>
+        </div>
+        <ul class="nav">
+          <li>
+            <a href="{% url 'mypage' %}">
+              <i class="tim-icons icon-badge"></i>
+              <p>My Info</p>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'likes' %}">
+              <i class="tim-icons icon-heart-2"></i>
+              <p>My Likes</p>
+            </a>
+          </li>
+          <li class="active">
+            <a href="{% url 'reviews' %}">
+              <i class="tim-icons icon-pencil"></i>
+              <p>My Reviews</p>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'statistics' %}">
+              <i class="tim-icons icon-chart-bar-32"></i>
+              <p>My Statistics</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" id="logo" href="/"><img src="{% static 'img/mazu_white.png' %}" alt="MAZU"></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="search-bar input-group">
+              </li>
+              <li class="dropdown nav-item">
+              </li>
+              <li class="dropdown nav-item">
+              </li>
+              <li class="separator d-lg-none"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title"><i>|</i>&nbsp;&nbsp;MY REVIEW</h5>
+<!--                <p class="category">리뷰 수정</p>-->
+              </div>
+              <div class="card-body">
+                <a href="/detail/{{review.exhibition_id}}/">{{ exhibition_name }}</a>
+                <form action="{% url 'update' review.review_id %}" method="post">{% csrf_token %}
+                  <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+                      <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star">5</label>
+                      <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star">4</label>
+                      <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star">3</label>
+                      <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star">2</label>
+                      <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">1</label>
+                  </div>
+                  <input type="hidden" name="myname" value="{{user.username}}">
+                  <input type="hidden" name="exhibition_id" value="{{review.exhibition_id}}">
+                  <div class="review-update row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label class="title">&nbsp;&nbsp;리뷰 제목</label>
+                        <input type="text" class="form-control update" placeholder="{{review.title}}" name="mytitle">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="review-update row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label class="title">&nbsp;&nbsp;리뷰 내용</label>
+                        <textarea rows="4" cols="80" class="form-control update" placeholder="수정할 내용을 입력해주세요" name="mycontent">{{review.detail}}</textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="review-btn btn btn-fill btn-primary">완료</button>
+                  <button type="button" class="review-btn btn btn-fill btn-primary" onclick="location.href='{% url 'reviews' %}'">취소</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!--   Core JS Files   -->
+    <script src="{% static 'js/core/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/core/popper.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}" type="text/javascript"></script>
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chartist JS -->
+    <script src="{% static 'js/plugins/chartjs.min.js' %}" type="text/javascript"></script>
+    <!--  Notifications Plugin    -->
+    <script src="{% static 'js/plugins/bootstrap-notify.js' %}" type="text/javascript"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{% static 'js/black-dashboard.js' %}" type="text/javascript"></script>
+</body>
+</html>

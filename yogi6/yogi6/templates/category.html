@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Category</title>
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'img/mazu.ico' %}">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!--stylesheet-->
+  <link rel="stylesheet" href="{% static 'css_detail/bootstrap.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css_detail/font-awesome.min.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css_detail/elegant-icons.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css_detail/style.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/category_styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/category_index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pagination.css' %}">
+
+  <!--script-->
+  <script>
+    function closeNav() {
+      document.getElementById("mySidebar").style.height = "0";
+      document.getElementById("mySidebar").style.width = "0";
+    }
+
+    function openNav() {
+      if (document.getElementById("mySidebar").classList.contains("open")) {
+        document.getElementById("mySidebar").classList.remove("open");
+        closeNav();
+      } else {
+        document.getElementById("mySidebar").classList.add("open");
+        document.getElementById("mySidebar").style.height = "100%";
+        document.getElementById("mySidebar").style.width = "100%";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Responsive navbar-->
+  <div id="wrapper">
+    {% if request.user.is_authenticated %}
+    <h1 id="user_login">{{request.user.display_name}} 님 환영합니다</h1>
+    {% endif %}
+
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button class="openbtn" onclick="openNav()"><span>&#9776;</span>CATEGORY</button>
+        <div id="mySidebar" class="sidebar">
+          <a href="{% url 'category' 0 %}">대중,</a>
+          <a href="{% url 'category' 1 %}">문화재,</a>
+          <a href="{% url 'category' 2 %}">미디어아트,</a>
+          <a href="{% url 'category' 3 %}">추상,</a>
+          <a href="{% url 'category' 4 %}">가족,</a>
+          <a href="{% url 'category' 5 %}">글로벌,</a>
+          <a href="{% url 'category' 6 %}">수상작,</a>
+          <a href="{% url 'category' 7 %}">현대,</a>
+          <a href="{% url 'category' 8 %}">과학,</a>
+          <a href="{% url 'category' 9 %}">예술,</a>
+          <a href="{% url 'category' 10 %}">ETC</a>
+        </div>
+        <a href="/"><img src="{% static 'img/mazu_white.png' %}"></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <!--검색창-->
+            <form method="get" action="{% url 'search' %}" class="search nav-item">{% csrf_token %}
+              <li class="nav-item"><input class="text-black" type="text" name="keyword" placeholder="  Search..."></li>
+              <li class="nav-item"><button class="btn-search text-black" type="submit"></button></li>
+            </form>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'mypage' %}">MY PAGE</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">LOGOUT</a></li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">SIGN UP</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">LOGIN</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- navbar end -->
+    <div class="cat-name-box">
+      <p class="cat-name">#
+        <i>{{ category_name }}</i>
+      </p>
+    </div>
+    <section>
+      <div class="content-list">
+        {% for data in exhibition_list %}
+        <div class="item">
+          <a href="{% url 'detail' data.exhibition_id %}" class="poster"><img src="{{ data.poster_link }}"
+              alt="{{ data.name }}"></a>
+          <a href="{% url 'detail' data.exhibition_id %}"><span>{{ data.name }}</span></a>
+          <p>{{data.start_period}} ~ {{data.end_period}}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="pagination">
+        {% if is_paginated %}
+        {% if page_obj.has_previous %}
+        <a class="page-btn btn btn-outline-info mb-4" href="?page=1">&lsaquo;&lsaquo;</a>
+        <a class="page-btn btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <!--첫페이지랑 마지막 페이지-->
+        {%if page_obj.number == 1 or page_obj.number == page_obj.paginator.num_pages %}
+        {% if page_obj.number == num %}
+        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:"-5" and num < page_obj.number|add:"5" %} <a class="btn btn-outline-info mb-4"
+          href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+
+          <!--앞뒤 2번쨰 페이지-->
+          {% elif page_obj.number == 2 or page_obj.number == page_obj.paginator.num_pages|add:'-1'%}
+          {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+          {% elif num > page_obj.number|add:"-4" and num < page_obj.number|add:"4" %} <a
+            class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+
+            <!--중간 페이지-->
+            {% else %}
+            {% if page_obj.number == num %}
+            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %} <a class="btn outline-info mb-4"
+              href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+              {% endif %}
+              {% endfor %}
+
+              {% if page_obj.has_next %}
+              <a class="page-btn btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+              <a class="page-btn btn btn-outline-info mb-4"
+                href="?page={{ page_obj.paginator.num_pages }}">&rsaquo;&rsaquo;</a>
+              {% endif %}
+              {% endif %}
+      </div>
+      <br>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>
