@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 spark =SparkSession.builder.getOrCreate()
 
 user="root"
-password="yogi220930"
+password="t0101"
 url="jdbc:mysql://localhost:3306/yogi6"
 driver="com.mysql.cj.jdbc.Driver"
 

@@ -29,8 +29,8 @@ DEBUG = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
-ALLOWED_HOSTS = ['35.79.131.28']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['35.79.131.28']
 #ALLOWED_HOSTS = ['127.0.0.1']
 
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "yogi6",
     'bootstrap4',
     'pure_pagination',
+    "django_elasticsearch_dsl",
 ]
 
 PAGINATION_SETTINGS = {
@@ -58,15 +59,13 @@ PAGINATION_SETTINGS = {
     'SHOW_FIRST_PAGE_WHEN_INVALID': True,
 }
 
-'''
+
 ELASTICSEARCH_DSL={
     'default':{
-        'hosts': '35.79.131.28:8960'
+        'hosts': '110.10.226.208:8960'
         },
-}
-'''
+}  
 
-'''
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -74,12 +73,13 @@ LOGGING = {
       'verbose': {
           'format': '%(levelname)s %(asctime)s : %(message)s'
           }
-    },
+    },   
     'handlers': {
         'file': {
             'encoding': 'utf-8',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': f'/home/ubuntu/logs/{date.today().isoformat()}.log',
+            # 'filename': f'/home/ubuntu/logs/{date.today().isoformat()}.log',
+            'filename': os.path.join('/home/ubuntu/', f'logs/{date.today().isoformat()}.log'),
             'maxBytes': 1024*1024*5,  # 5 MB
             'backupCount': 5,                                               
         },
@@ -91,8 +91,10 @@ LOGGING = {
         'logstash': {
             'level': 'INFO',
             'class': 'logstash.TCPLogstashHandler',
-            'host': '35.79.131.28',
-            'port': 5044,
+            # 'host': '35.79.131.28',
+            # 'port': 5044,
+            'host': '110.10.226.208',
+            'port': '5044',
             'version': 1,
             'message_type': 'logstash',
             'fqdn': True,
@@ -129,7 +131,7 @@ LOGGING = {
     }
 }
 
-'''
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -166,14 +168,22 @@ WSGI_APPLICATION = "yogi6.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": 'yogi6',
+    #     "USER": 'root',
+    #     "PASSWORD": 'yogi220930',
+    #     "HOST": '35.79.131.28',
+    #     "PORT": '3306',
+    # }
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": 'yogi6',
         "USER": 'root',
-        "PASSWORD": 'yogi220930',
-        "HOST": '35.79.131.28',
+        "PASSWORD": 't0101',
+        "HOST": '110.10.226.208',
         "PORT": '3306',
-    }
+    }    
 }
 
 
